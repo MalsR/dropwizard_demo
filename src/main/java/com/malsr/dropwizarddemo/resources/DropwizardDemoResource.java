@@ -2,7 +2,7 @@ package com.malsr.dropwizarddemo.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Optional;
-import com.malsr.dropwizarddemo.core.DemoRepresentation;
+import com.malsr.dropwizarddemo.api.DemoRepresentation;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

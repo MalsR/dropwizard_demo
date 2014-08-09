@@ -1,4 +1,4 @@
-package com.malsr.dropwizarddemo.core;
+package com.malsr.dropwizarddemo.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
