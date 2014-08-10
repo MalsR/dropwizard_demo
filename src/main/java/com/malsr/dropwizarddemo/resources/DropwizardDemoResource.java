@@ -3,6 +3,7 @@ package com.malsr.dropwizarddemo.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Optional;
 import com.malsr.dropwizarddemo.api.DemoRepresentation;
+import com.malsr.dropwizarddemo.views.DemoFreeMarkerView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -30,5 +31,13 @@ public class DropwizardDemoResource {
     public DemoRepresentation pingDemo(@QueryParam("name") Optional<String> name) {
         final String value = String.format(template, name.or(defaultName));
         return new DemoRepresentation(counter.incrementAndGet(), value);
+    }
+
+    @GET
+    @Timed
+    @Path("/freemarker")
+    @Produces(MediaType.TEXT_HTML)
+    public DemoFreeMarkerView demoTest() {
+        return new DemoFreeMarkerView();
     }
 }

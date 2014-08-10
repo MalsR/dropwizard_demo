@@ -6,6 +6,7 @@ import com.malsr.dropwizarddemo.resources.DropwizardDemoResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 
 public class DropwizardDemoApplication extends Application<DropwizardDemoConfiguration> {
 
@@ -20,7 +21,8 @@ public class DropwizardDemoApplication extends Application<DropwizardDemoConfigu
 
     @Override
     public void initialize(Bootstrap<DropwizardDemoConfiguration> helloWorldConfigurationBootstrap) {
-
+        //enables the rendering of FreeMarker & Mustache views
+        helloWorldConfigurationBootstrap.addBundle(new ViewBundle());
     }
 
     @Override
