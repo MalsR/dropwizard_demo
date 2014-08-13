@@ -3,10 +3,14 @@ package com.malsr.dropwizarddemo;
 import com.malsr.dropwizarddemo.configuration.DropwizardDemoConfiguration;
 import com.malsr.dropwizarddemo.healthcheck.DropwizardDemoHealthCheck;
 import com.malsr.dropwizarddemo.resources.DropwizardDemoResource;
+import com.malsr.dropwizarddemo.resources.FlickrResource;
+import com.sun.jersey.api.client.Client;
 import io.dropwizard.Application;
+import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import service.FlickrService;
 
 public class DropwizardDemoApplication extends Application<DropwizardDemoConfiguration> {
 
@@ -33,7 +37,14 @@ public class DropwizardDemoApplication extends Application<DropwizardDemoConfigu
         DropwizardDemoHealthCheck dropwizardDemoHealthCheck = new DropwizardDemoHealthCheck(
                 dropwizardDemoConfiguration.getTemplate());
 
+        Client jerseyClient = new JerseyClientBuilder(environment).using(dropwizardDemoConfiguration.getJerseyClientConfiguration())
+                .build(getName());
+
+        FlickrService flickrService = new FlickrService(jerseyClient);
+        FlickrResource flickrResource = new FlickrResource(flickrService);
+
         environment.jersey().register(dropwizardDemoResource);
+        environment.jersey().register(flickrResource);
         environment.healthChecks().register("template", dropwizardDemoHealthCheck);
     }
 }
