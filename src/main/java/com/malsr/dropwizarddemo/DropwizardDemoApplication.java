@@ -4,6 +4,7 @@ import com.malsr.dropwizarddemo.configuration.DropwizardDemoConfiguration;
 import com.malsr.dropwizarddemo.healthcheck.DropwizardDemoHealthCheck;
 import com.malsr.dropwizarddemo.resources.DropwizardDemoResource;
 import com.malsr.dropwizarddemo.resources.FlickrResource;
+import com.malsr.dropwizarddemo.resources.HystrixDemoResource;
 import com.sun.jersey.api.client.Client;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
@@ -43,8 +44,11 @@ public class DropwizardDemoApplication extends Application<DropwizardDemoConfigu
         FlickrService flickrService = new FlickrService(jerseyClient);
         FlickrResource flickrResource = new FlickrResource(flickrService);
 
+        HystrixDemoResource hystrixDemoResource = new HystrixDemoResource(environment.getObjectMapper());
+
         environment.jersey().register(dropwizardDemoResource);
         environment.jersey().register(flickrResource);
+        environment.jersey().register(hystrixDemoResource);
         environment.healthChecks().register("template", dropwizardDemoHealthCheck);
     }
 }
