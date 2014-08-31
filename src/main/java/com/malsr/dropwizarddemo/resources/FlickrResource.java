@@ -1,7 +1,7 @@
 package com.malsr.dropwizarddemo.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import service.FlickrService;
+import com.malsr.dropwizarddemo.service.FlickrService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

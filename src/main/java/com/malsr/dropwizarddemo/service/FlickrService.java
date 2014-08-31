@@ -1,4 +1,4 @@
-package service;
+package com.malsr.dropwizarddemo.service;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;

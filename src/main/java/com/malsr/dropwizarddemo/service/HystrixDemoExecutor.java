@@ -1,15 +1,9 @@
-package service;
+package com.malsr.dropwizarddemo.service;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixThreadPool;
-import com.netflix.hystrix.HystrixThreadPoolProperties;
-import io.dropwizard.client.HttpClientBuilder;
-import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Random;
 
 public class HystrixDemoExecutor extends HystrixCommand<String> {
 

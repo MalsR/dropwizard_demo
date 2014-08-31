@@ -3,10 +3,9 @@ package com.malsr.dropwizarddemo.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.hystrix.HystrixThreadPoolProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.HystrixDemoExecutor;
+import com.malsr.dropwizarddemo.service.HystrixDemoExecutor;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

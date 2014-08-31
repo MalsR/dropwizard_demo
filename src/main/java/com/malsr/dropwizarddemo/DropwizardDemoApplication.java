@@ -11,7 +11,7 @@ import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
-import service.FlickrService;
+import com.malsr.dropwizarddemo.service.FlickrService;
 
 public class DropwizardDemoApplication extends Application<DropwizardDemoConfiguration> {
 
