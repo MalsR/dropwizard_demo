@@ -2,6 +2,7 @@ package com.malsr.dropwizarddemo;
 
 import com.malsr.dropwizarddemo.configuration.DropwizardDemoConfiguration;
 import com.malsr.dropwizarddemo.healthcheck.DropwizardDemoHealthCheck;
+import com.malsr.dropwizarddemo.resources.ContentNegotiationResource;
 import com.malsr.dropwizarddemo.resources.DropwizardDemoResource;
 import com.malsr.dropwizarddemo.resources.FlickrResource;
 import com.malsr.dropwizarddemo.resources.HystrixDemoResource;
@@ -46,9 +47,12 @@ public class DropwizardDemoApplication extends Application<DropwizardDemoConfigu
 
         HystrixDemoResource hystrixDemoResource = new HystrixDemoResource(environment.getObjectMapper());
 
+        ContentNegotiationResource contentNegotiationResource = new ContentNegotiationResource();
+
         environment.jersey().register(dropwizardDemoResource);
         environment.jersey().register(flickrResource);
         environment.jersey().register(hystrixDemoResource);
+        environment.jersey().register(contentNegotiationResource);
         environment.healthChecks().register("template", dropwizardDemoHealthCheck);
     }
 }
