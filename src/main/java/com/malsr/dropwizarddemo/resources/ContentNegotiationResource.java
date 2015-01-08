@@ -1,5 +1,8 @@
 package com.malsr.dropwizarddemo.resources;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -11,15 +14,18 @@ import javax.ws.rs.core.Response;
 @Path("/content-negotiation")
 public class ContentNegotiationResource {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentNegotiationResource.class);
+
     private static final String CONTENT_TYPE = "application/vnd.contentnegotiation.v1+json";
 
     /**
      * Endpoint with @Produces annotation.
      */
     @GET
-    @Path("/with-produces")
+    @Path("/opened-version")
     @Produces(CONTENT_TYPE) //The supported content type of the response body
-    public Response getResponseWithProducesAnnotation() {
+    public Response getResponseWithSpecificContentType() {
+        LOGGER.info("called getResponseWithSpecificContentType");
         return Response.ok("OK").build();
     }
 
@@ -28,8 +34,9 @@ public class ContentNegotiationResource {
      * will cope with content negotiation on various scenarios.
      */
     @GET
-    @Path("/without-produces")
-    public Response getResponseWithoutProducesAnnotation() {
+    @Path("/opened-version")
+    public Response getResponseWithDefaultContentType() {
+        LOGGER.info("called getResponseWithDefaultContentType");
         return Response.ok("OK").build();
     }
 }

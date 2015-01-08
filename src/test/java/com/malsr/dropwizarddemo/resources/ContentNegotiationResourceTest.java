@@ -20,8 +20,7 @@ public class ContentNegotiationResourceTest {
     private static final String INCORRECT_CONTENT_TYPE = "application/vnd.resource.v1+json";
     private static final String CONTENT_TYPE = "application/vnd.contentnegotiation.v1+json";
 
-    public static final String WITH_PRODUCES_PATH = "/with-produces";
-    public static final String WITHOUT_PRODUCES_PATH = "/without-produces";
+    public static final String WITH_PRODUCES_PATH = "/opened-version";
 
     @ClassRule
     public static final DropwizardAppRule<DropwizardDemoConfiguration> RULE =
@@ -30,15 +29,15 @@ public class ContentNegotiationResourceTest {
     // ********************************************* WITH_PRODUCES_PATH **********************************************
 
     @Test
-    public void returnsNotAcceptableCallingResponseWithProducesAnnotationWithIncorrectAcceptHeader() {
+    public void returnsOKCallingResponseWithProducesAnnotationWithIncorrectAcceptHeader() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
         ClientResponse response = resource.path(WITH_PRODUCES_PATH)
                                           .accept(INCORRECT_CONTENT_TYPE)
                                           .get(ClientResponse.class);
 
-        assertEquals(HttpStatus.SC_NOT_ACCEPTABLE, response.getStatus());
-        assertEquals("", response.getEntity(String.class));
+        assertEquals(HttpStatus.SC_OK, response.getStatus());
+        assertEquals("OK", response.getEntity(String.class));
     }
 
     @Test
@@ -128,7 +127,7 @@ public class ContentNegotiationResourceTest {
         String expectedAcceptHeader = "application/whatever.json";
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
-        ClientResponse response = resource.path(WITHOUT_PRODUCES_PATH)
+        ClientResponse response = resource.path(WITH_PRODUCES_PATH)
                                           .accept(expectedAcceptHeader)
                                           .get(ClientResponse.class);
 
@@ -140,7 +139,7 @@ public class ContentNegotiationResourceTest {
     public void returnsDefaultContentTypeWhenNoAcceptHeaderSpecified() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
-        ClientResponse response = resource.path(WITHOUT_PRODUCES_PATH)
+        ClientResponse response = resource.path(WITH_PRODUCES_PATH)
                                           .get(ClientResponse.class);
 
         assertEquals(MediaType.TEXT_HTML, response.getHeaders().getFirst("Content-Type"));
@@ -150,7 +149,7 @@ public class ContentNegotiationResourceTest {
     public void returns200OnResponseWithoutProducesAnnotationWithNoAcceptHeader() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
-        ClientResponse response = resource.path(WITHOUT_PRODUCES_PATH)
+        ClientResponse response = resource.path(WITH_PRODUCES_PATH)
                                           .get(ClientResponse.class);
 
         assertEquals(HttpStatus.SC_OK, response.getStatus());
@@ -160,7 +159,7 @@ public class ContentNegotiationResourceTest {
     public void returns200OnResponseWithoutProducesAnnotationWithContentTypeHeader() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
-        ClientResponse response = resource.path(WITHOUT_PRODUCES_PATH)
+        ClientResponse response = resource.path(WITH_PRODUCES_PATH)
                                           .header(HttpHeaders.CONTENT_TYPE, "application/somecontenttype.json")
                                           .get(ClientResponse.class);
 
