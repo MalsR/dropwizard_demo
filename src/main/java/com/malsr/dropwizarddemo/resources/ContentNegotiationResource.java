@@ -37,6 +37,6 @@ public class ContentNegotiationResource {
     @Path("/opened-version")
     public Response getResponseWithDefaultContentType() {
         LOGGER.info("called getResponseWithDefaultContentType");
-        return Response.ok("OK").build();
+        return Response.ok("DEFAULT").build();
     }
 }

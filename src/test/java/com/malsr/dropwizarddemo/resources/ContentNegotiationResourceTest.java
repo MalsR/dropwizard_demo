@@ -5,7 +5,6 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.apache.http.Header;
 import org.apache.http.HttpStatus;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class ContentNegotiationResourceTest {
     // ********************************************* WITH_PRODUCES_PATH **********************************************
 
     @Test
-    public void returnsOKCallingResponseWithProducesAnnotationWithIncorrectAcceptHeader() {
+    public void returnsDefaultCallingResponseWithProducesAnnotationWithIncorrectAcceptHeader() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
         ClientResponse response = resource.path(WITH_PRODUCES_PATH)
@@ -37,7 +36,7 @@ public class ContentNegotiationResourceTest {
                                           .get(ClientResponse.class);
 
         assertEquals(HttpStatus.SC_OK, response.getStatus());
-        assertEquals("OK", response.getEntity(String.class));
+        assertEquals("DEFAULT", response.getEntity(String.class));
     }
 
     @Test
@@ -53,14 +52,14 @@ public class ContentNegotiationResourceTest {
     }
 
     @Test
-    public void returnsOKCallingResponseWithProducesAnnotationWithNoAcceptHeader() {
+    public void returnsDefaultCallingResponseWithProducesAnnotationWithNoAcceptHeader() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
         ClientResponse response = resource.path(WITH_PRODUCES_PATH)
                                           .get(ClientResponse.class);
 
         assertEquals(HttpStatus.SC_OK, response.getStatus());
-        assertEquals("OK", response.getEntity(String.class));
+        assertEquals("DEFAULT", response.getEntity(String.class));
     }
 
     @Test
@@ -87,7 +86,7 @@ public class ContentNegotiationResourceTest {
     }
 
     @Test
-    public void returnsOKOnResponseWithProducesAnnotationWithMultipleAcceptHeaders() {
+    public void returnsDefaultOnResponseWithProducesAnnotationWithMultipleAcceptHeaders() {
         /*
         Sending multiple accept headers but with the following order. This is telling the server that
         1 - When contacting the following end point I want the response to be in the "INCORRECT_CONTENT_TYPE" format, by
@@ -104,7 +103,7 @@ public class ContentNegotiationResourceTest {
                                           .get(ClientResponse.class);
 
         assertEquals(HttpStatus.SC_OK, response.getStatus());
-        assertEquals("OK", response.getEntity(String.class));
+        assertEquals("DEFAULT", response.getEntity(String.class));
     }
 
     @Test
