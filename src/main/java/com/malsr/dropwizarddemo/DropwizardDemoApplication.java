@@ -4,7 +4,7 @@ import com.malsr.dropwizarddemo.configuration.DropwizardDemoConfiguration;
 import com.malsr.dropwizarddemo.healthcheck.DropwizardDemoHealthCheck;
 import com.malsr.dropwizarddemo.resources.ContentNegotiationResource;
 import com.malsr.dropwizarddemo.resources.DropwizardDemoResource;
-import com.malsr.dropwizarddemo.resources.FlickrResource;
+import com.malsr.dropwizarddemo.resources.flickr.FlickrResource;
 import com.malsr.dropwizarddemo.resources.HystrixDemoResource;
 import com.sun.jersey.api.client.Client;
 import io.dropwizard.Application;

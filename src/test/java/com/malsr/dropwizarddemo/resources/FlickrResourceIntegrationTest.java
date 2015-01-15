@@ -20,14 +20,22 @@ public class FlickrResourceIntegrationTest {
     @ClassRule
     public static final DropwizardAppRule<DropwizardDemoConfiguration> RULE =
             new DropwizardAppRule<>(StubbedDropwizardDemoApplication.class, "dropwizard-demo.yml");
+    public static final String FLICKR_PATH = "/flickr";
+    public static final String X_USER_NAME = "X-USER-NAME";
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private WebResource resource;
+
+    @Before
+    public void setUp() throws Exception {
+        resource = Client.create().resource("http://localhost:9090");
+    }
+
     @Test
     public void returnsOKForUserInfo() {
-        WebResource resource = Client.create().resource("http://localhost:9090/flickr");
-
-        ClientResponse response = resource.get(ClientResponse.class);
+        ClientResponse response = resource.path(FLICKR_PATH)
+                                          .get(ClientResponse.class);
 
         assertEquals(HttpStatus.SC_OK, response.getStatus());
     }
@@ -36,9 +44,10 @@ public class FlickrResourceIntegrationTest {
     public void returnsCorrectResponseBodyForUserInfo() throws JsonProcessingException {
         ExpectedResponseBody expectedResponseBody = new ExpectedResponseBody("mals_r", "https://www.flickr.com/photos/mals_r/");
         String expectedResponse = objectMapper.writeValueAsString(expectedResponseBody);
-        WebResource resource = Client.create().resource("http://localhost:9090/flickr");
 
-        ClientResponse response = resource.get(ClientResponse.class);
+        ClientResponse response = resource.path(FLICKR_PATH)
+                                          .header(X_USER_NAME, "mals_r")
+                                          .get(ClientResponse.class);
 
         assertEquals(expectedResponse, response.getEntity(String.class));
     }
@@ -84,5 +93,4 @@ public class FlickrResourceIntegrationTest {
             }
         }
     }
-
 }

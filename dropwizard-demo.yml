@@ -14,9 +14,12 @@ server:
 
 # Logging settings.
 logging:
-     # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-     # level: INFO, WARN, ERROR
-    appenders:
-        - type: console
-          threshold: DEBUG
-          target: stderr
+  level: DEBUG
+  appenders:
+    - type: console
+      logFormat: "[%d{ISO8601}] dropwizard-demo %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg %n"
+    - type: file
+      currentLogFilename: ./dropwizard-demo.log
+      archivedLogFilenamePattern: ./dropwizard-demo-%d.log.gz
+      archivedFileCount: 5
+      logFormat: "[%d{ISO8601}] dropwizard-demo %highlight(%-5level) [%thread] %cyan(%logger{15}) - %msg %n"
