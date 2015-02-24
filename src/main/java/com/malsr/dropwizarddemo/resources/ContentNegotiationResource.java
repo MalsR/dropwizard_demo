@@ -39,4 +39,13 @@ public class ContentNegotiationResource {
         LOGGER.info("called getResponseWithDefaultContentType");
         return Response.ok("DEFAULT").build();
     }
+
+    @GET
+    @Path("/example-get-v1")
+    @Produces("application/vnd.version1.v1+json")
+    public Response getVersion1() {
+        LOGGER.info("called getVersion1");
+
+        return Response.ok("Version 1").build();
+    }
 }
