@@ -1,3 +1,5 @@
 /.idea
 *.iml
+dropwizard-demo.log
+*.log
 target/
