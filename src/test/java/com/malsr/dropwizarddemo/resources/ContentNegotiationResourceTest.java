@@ -28,7 +28,7 @@ public class ContentNegotiationResourceTest {
     // ********************************************* WITH_PRODUCES_PATH **********************************************
 
     @Test
-    public void returnsDefaultCallingResponseWithProducesAnnotationWithIncorrectAcceptHeader() {
+    public void returnsDefaultCallingWithProducesPathWithIncorrectAcceptHeader() {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
         ClientResponse response = resource.path(WITH_PRODUCES_PATH)
@@ -79,8 +79,8 @@ public class ContentNegotiationResourceTest {
         WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
 
         ClientResponse response = resource.path(WITH_PRODUCES_PATH)
-                .accept(CONTENT_TYPE)
-                .get(ClientResponse.class);
+                                          .accept(CONTENT_TYPE)
+                                          .get(ClientResponse.class);
 
         assertEquals(CONTENT_TYPE, response.getHeaders().getFirst("Content-Type"));
     }
@@ -119,8 +119,7 @@ public class ContentNegotiationResourceTest {
         assertEquals("OK", response.getEntity(String.class));
     }
 
-    // ********************************************* WITHOUT_PRODUCES_PATH ********************************************
-
+    //TODO change withoutproduces
     @Test
     public void returnsExpectedContentTypeOnResponseWithoutProducesAnnotation() {
         String expectedAcceptHeader = "application/whatever.json";
@@ -164,5 +163,19 @@ public class ContentNegotiationResourceTest {
 
         assertEquals(HttpStatus.SC_OK, response.getStatus());
         assertEquals(MediaType.TEXT_HTML, response.getHeaders().getFirst("Content-Type"));
+    }
+
+    //Specific test to show for a particular GET endpoint with Produces ONLY.
+
+    @Test
+    public void returnsNotAcceptableCallingEndpointWithIncorrectAcceptHeader() {
+        WebResource resource = Client.create().resource("http://localhost:9090/content-negotiation");
+
+        ClientResponse response = resource.path("/example-get-v1")
+                                          .accept("application/vnd.incorrect.v1+json")
+                                          .get(ClientResponse.class);
+
+        assertEquals(HttpStatus.SC_NOT_ACCEPTABLE, response.getStatus());
+        assertEquals("", response.getEntity(String.class));
     }
 }
