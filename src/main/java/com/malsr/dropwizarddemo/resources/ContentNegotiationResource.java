@@ -31,7 +31,7 @@ public class ContentNegotiationResource {
 
     /**
      * End point without @Produces annotation. Purpose of not having the @Produces annotation is to see how the server
-     * will cope with content negotiation on various scenarios.
+     * will cope with content negotiation on various scenarios, i.e. rest endpoint versioning.
      */
     @GET
     @Path("/opened-version")
